@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <title>Error Popup</title>
+    <style>
+        body {
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        ::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+
+<body class="notification is-danger">
+    <div class="notification is-danger">
+        <strong class="is-size-4">Error</strong>
+        <p id="popup-content"></p>
+    </div>
+    <button class="delete"></button>
+
+    <script>
+        const { ipcRenderer } = require('electron');
+
+        ipcRenderer.on('popup-message', (event, message) => {
+            document.getElementById('popup-content').innerText = message;
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Close the popup when the close button is clicked
+            document.querySelector('.delete').addEventListener('click', () => {
+                window.close();
+            });
+        });
+    </script>
+</body>
+
+</html>
